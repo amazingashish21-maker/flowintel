@@ -69,15 +69,11 @@
     <nav class="sticky top-0 z-50 bg-[#FAF9F6]/80 backdrop-blur-md border-b border-[#E5E7EB]">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             
-            <!-- LOGO_ASSET_START: Edit the SVG below to change the brand mark -->
+            <!-- LOGO_ASSET_START: Reference to the GitHub image file -->
             <div class="flex items-center space-x-3 group cursor-pointer">
-                <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="transition-transform group-hover:scale-105">
-                    <rect width="100" height="100" rx="20" fill="#2C3E50"/>
-                    <path d="M30 70C30 70 35 45 50 45C65 45 70 20 70 20" stroke="#C0A080" stroke-width="8" stroke-linecap="round"/>
-                    <circle cx="30" cy="70" r="8" fill="#FAF9F6"/>
-                    <circle cx="70" cy="20" r="8" fill="#FAF9F6"/>
-                    <circle cx="50" cy="45" r="5" fill="#C0A080"/>
-                </svg>
+                <img src="image-removebg-preview.png" alt="FlowIntelLabs Logo" class="h-10 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <!-- Fallback if image fails to load -->
+                <div style="display:none;" class="w-10 h-10 bg-[#2C3E50] rounded-lg flex items-center justify-center text-white font-bold">F</div>
                 <span class="text-xl font-bold tracking-tight text-[#2C3E50]">FlowIntelLabs</span>
             </div>
             <!-- LOGO_ASSET_END -->
@@ -221,14 +217,8 @@
 
     <footer class="bg-[#2C3E50] text-white py-16">
         <div class="container mx-auto px-6 text-center flex flex-col items-center">
-            <!-- LOGO_ASSET_FOOTER: Secondary logo usage -->
-            <svg width="60" height="60" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="mb-6 opacity-80">
-                <rect width="100" height="100" rx="20" fill="#34495E"/>
-                <path d="M30 70C30 70 35 45 50 45C65 45 70 20 70 20" stroke="#C0A080" stroke-width="7" stroke-linecap="round"/>
-                <circle cx="30" cy="70" r="8" fill="#FAF9F6"/>
-                <circle cx="70" cy="20" r="8" fill="#FAF9F6"/>
-                <circle cx="50" cy="45" r="4" fill="#C0A080"/>
-            </svg>
+            <!-- LOGO_ASSET_FOOTER: Logo image in footer -->
+            <img src="image-removebg-preview.png" alt="FlowIntelLabs Logo" class="h-14 w-auto object-contain mb-6 opacity-90" onerror="this.style.display='none';">
             <div class="text-2xl font-bold mb-4 tracking-tight">FlowIntelLabs<span class="text-[#C0A080]">.</span></div>
             <p class="text-gray-400 text-sm max-w-xs">Connecting business intuition with architectural precision.</p>
             <div class="mt-12 pt-8 border-t border-gray-700 w-full text-[10px] text-gray-500 uppercase tracking-widest">

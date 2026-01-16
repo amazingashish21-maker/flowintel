@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlowIntelLabs | Where Processes Find Their Flow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+    <!-- Chosen Palette: Intellectual Flow -->
+    <style>
+        :root {
+            --bg-color: #FAF9F6;
+            --primary: #2C3E50;
+            --secondary: #C0A080;
+            --text-main: #34495E;
+            --accent: #5D6D7E;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, .serif-font {
+            font-family: 'Lora', serif;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
+            height: 320px;
+            max-height: 400px;
+        }
+
+        .case-study-tab {
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .case-study-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--secondary);
+            background-color: #fff;
+        }
+
+        .metric-card {
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: var(--secondary); border-radius: 10px; }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-[#FAF9F6]/80 backdrop-blur-md border-b border-[#E5E7EB]">
+        <div class="container mx-auto px-6 py-2 flex justify-between items-center">
+            
+            <!-- LOGO_ASSET_START: Updated size from h-10 to h-20 -->
+            <div class="flex items-center space-x-4 group cursor-pointer">
+                <img src="logo2.png" alt="FlowIntelLabs Logo" class="h-10 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <!-- Fallback if image fails to load -->
+                <div style="display:none;" class="w-12 h-12 bg-[#2C3E50] rounded-lg flex items-center justify-center text-white font-bold text-xl">F</div>
+                <span class="text-2xl font-bold tracking-tight text-[#2C3E50]">FlowIntelLabs</span>
+            </div>
+            <!-- LOGO_ASSET_END -->
+            
+            <div class="hidden md:flex space-x-8 text-sm font-medium">
+                <a href="#vision" class="hover:text-[#C0A080] transition-colors">Vision</a>
+                <a href="#case-studies" class="hover:text-[#C0A080] transition-colors">Case Explorer</a>
+                <a href="#integration" class="hover:text-[#C0A080] transition-colors">Frameworks</a>
+                <a href="#talent" class="hover:text-[#C0A080] transition-colors">Execution</a>
+            </div>
+            <button class="bg-[#2C3E50] text-white px-5 py-2 rounded text-xs font-semibold uppercase tracking-widest hover:bg-[#C0A080] transition-all">
+                Let's Flow
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="vision" class="container mx-auto px-6 py-20 text-center">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-5xl md:text-7xl font-medium text-[#2C3E50] mb-8 leading-tight">
+                Where Processes Find <br> <span class="italic text-[#C0A080]">Their Flow.</span>
+            </h1>
+            <p class="text-xl text-[#5D6D7E] mb-12 leading-relaxed font-light">
+                Bridging the gap between business vision and technical implementation. <br class="hidden md:block">
+                We design decision frameworks that scale.
+            </p>
+        </div>
+    </header>
+
+    <!-- Case Study Explorer -->
+    <section id="case-studies" class="bg-white py-24">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-[#C0A080] font-bold tracking-widest text-xs uppercase">Impact Portfolio</span>
+                <h2 class="text-4xl font-bold text-[#2C3E50] mt-4">Solutions in Motion</h2>
+                <p class="text-[#5D6D7E] mt-4 max-w-2xl mx-auto">Explore how we solved complex operational bottlenecks across different domains.</p>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12 border-b border-gray-100">
+                <button onclick="switchStudy(0)" class="case-study-tab active px-6 py-4 text-sm font-bold uppercase tracking-wider" id="tab-0">Laptop Refurbishing</button>
+                <button onclick="switchStudy(1)" class="case-study-tab px-6 py-4 text-sm font-bold uppercase tracking-wider" id="tab-1">Shopify/ERP Integration</button>
+                <button onclick="switchStudy(2)" class="case-study-tab px-6 py-4 text-sm font-bold uppercase tracking-wider" id="tab-2">Hardware Validation</button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <!-- Study Details -->
+                <div class="lg:col-span-5 space-y-8">
+                    <div>
+                        <h3 id="study-title" class="text-3xl font-bold text-[#2C3E50] mb-4">ERP-Driven Refurbishing</h3>
+                        <p id="study-desc" class="text-[#5D6D7E] leading-relaxed">Transforming a sheet-based quality inspection process into a fully ERP-driven system.</p>
+                    </div>
+
+                    <div class="bg-[#FAF9F6] p-6 rounded-2xl">
+                        <h4 class="text-xs font-bold text-[#C0A080] uppercase tracking-widest mb-4">Key Improvements</h4>
+                        <ul id="study-points" class="space-y-4">
+                            <!-- Points injected by JS -->
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Study Data -->
+                <div class="lg:col-span-7 bg-[#FAF9F6] p-8 rounded-3xl border border-gray-100">
+                    <div class="flex items-center justify-between mb-8">
+                        <h4 id="chart-title" class="font-bold text-[#2C3E50]">Efficiency Gains</h4>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="studyChart"></canvas>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 mt-8">
+                        <div class="metric-card bg-white p-6 rounded-xl shadow-sm text-center">
+                            <div id="stat-1-val" class="text-3xl font-bold text-[#2C3E50]">24m → 11m</div>
+                            <div id="stat-1-label" class="text-[10px] font-bold text-[#C0A080] uppercase mt-1">Inspection Time</div>
+                        </div>
+                        <div class="metric-card bg-white p-6 rounded-xl shadow-sm text-center">
+                            <div id="stat-2-val" class="text-3xl font-bold text-[#2C3E50]">26% → 10%</div>
+                            <div id="stat-2-label" class="text-[10px] font-bold text-[#C0A080] uppercase mt-1">Material Errors</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Frameworks Section -->
+    <section id="integration" class="py-24 bg-[#FAF9F6]">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-4xl font-bold text-[#2C3E50] mb-4">The Decision Framework</h2>
+                <p class="text-[#5D6D7E]">Beyond technical wins, we build the frameworks that enable businesses to act with clarity and control.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-2xl border border-gray-100">
+                    <h4 class="font-bold text-lg mb-4">Fraud Prevention</h4>
+                    <p class="text-sm text-[#5D6D7E]">Logic-based eligibility workflows ensuring benefits reach only valid customers.</p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl border border-gray-100">
+                    <h4 class="font-bold text-lg mb-4">Traceability</h4>
+                    <p class="text-sm text-[#5D6D7E]">Utilities designed to prevent inventory mismatches through real-time interdependent BOM management.</p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl border border-gray-100">
+                    <h4 class="font-bold text-lg mb-4">Operational Alerts</h4>
+                    <p class="text-sm text-[#5D6D7E]">Automated error logging that translates system failures into immediate operational instructions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Execution & Talent -->
+    <section id="talent" class="py-24 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <div class="lg:w-1/2">
+                    <h2 class="text-4xl font-bold text-[#2C3E50] mb-6">Powered by Talent, <br> <span class="text-[#C0A080]">Built to Scale</span></h2>
+                    <p class="text-[#5D6D7E] mb-8 leading-relaxed">Execution capability is our differentiator. We combine founder-level oversight with prototyping energy.</p>
+                    <div class="chart-container !h-64">
+                        <canvas id="talentChart"></canvas>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 bg-[#FAF9F6] p-10 rounded-3xl">
+                    <div class="space-y-8">
+                        <div class="flex gap-4">
+                            <div class="text-[#C0A080] text-2xl">👥</div>
+                            <div>
+                                <h5 class="font-bold text-[#2C3E50]">Senior Developer Network</h5>
+                                <p class="text-sm text-[#5D6D7E]">Translating well-defined requirements into reliable, production-ready code.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="text-[#C0A080] text-2xl">🎓</div>
+                            <div>
+                                <h5 class="font-bold text-[#2C3E50]">Early-Career Technologists</h5>
+                                <p class="text-sm text-[#5D6D7E]">Engineering students enabling rapid research and cost-effective scaling.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#2C3E50] text-white py-16">
+        <div class="container mx-auto px-6 text-center flex flex-col items-center">
+            <!-- LOGO_ASSET_FOOTER: Increased size from h-14 to h-32 -->
+            <img src="logo2.png" alt="FlowIntelLabs Logo" class="h-16 w-auto object-contain mb-6 opacity-95" onerror="this.style.display='none';">
+            <div class="text-3xl font-bold mb-4 tracking-tight">FlowIntelLabs<span class="text-[#C0A080]">.</span></div>
+            <p class="text-gray-400 text-sm max-w-xs">Connecting business intuition with architectural precision.</p>
+            <div class="mt-12 pt-8 border-t border-gray-700 w-full text-[10px] text-gray-500 uppercase tracking-widest">
+                &copy; 2026 FlowIntelLabs. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const caseStudies = [
+            {
+                title: "ERP-Driven Refurbishing",
+                desc: "Transforming a sheet-based quality inspection process into a fully ERP-driven system for a laptop refurbishing operation.",
+                points: ["Redesigned inspection flow with grading logic", "Automated component material requests", "Centralized data capture for QA"],
+                chartLabel: "Efficiency Gains",
+                labels: ["Inspection Time (m)", "Error Rate (%)"],
+                before: [24, 26],
+                after: [11, 10],
+                stat1: "24m → 11m",
+                stat1Label: "Inspection Time",
+                stat2: "26% → 10%",
+                stat2Label: "Material Errors"
+            },
+            {
+                title: "Shopify & ERP Sync",
+                desc: "Integrated e-commerce sales with complex operational ERP, handling tax exclusions and fraud-prevention logic.",
+                points: ["Item-level data mapping", "Automated operational alerts", "One-time benefit issuance logic"],
+                chartLabel: "Workflow Accuracy",
+                labels: ["Manual Entry (h)", "Sync Success (%)"],
+                before: [8, 70],
+                after: [0.5, 99.8],
+                stat1: "8h → 0.5h",
+                stat1Label: "Daily Sync Time",
+                stat2: "99.8%",
+                stat2Label: "Sync Accuracy"
+            },
+            {
+                title: "Hardware Validation",
+                desc: "Automated utility capturing hardware data directly from laptops to eliminate human error in validation.",
+                points: ["Direct BIOS/System data parsing", "Automated RAM/CPU verification", "Direct parse to Quality System"],
+                chartLabel: "Validation Speed",
+                labels: ["Manual Steps", "Verification (s)"],
+                before: [15, 120],
+                after: [1, 15],
+                stat1: "15 → 1",
+                stat1Label: "Process Steps",
+                stat2: "-87%",
+                stat2Label: "Cycle Time"
+            }
+        ];
+
+        let studyChart;
+        let talentChart;
+
+        function initCharts() {
+            const ctxStudy = document.getElementById('studyChart').getContext('2d');
+            studyChart = new Chart(ctxStudy, {
+                type: 'bar',
+                data: {
+                    labels: caseStudies[0].labels,
+                    datasets: [
+                        { label: 'Before', data: caseStudies[0].before, backgroundColor: '#E5E7EB', borderRadius: 6 },
+                        { label: 'After FlowIntel', data: caseStudies[0].after, backgroundColor: '#C0A080', borderRadius: 6 }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } },
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+
+            const ctxTalent = document.getElementById('talentChart').getContext('2d');
+            talentChart = new Chart(ctxTalent, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Seniors', 'Founders', 'Students'],
+                    datasets: [{
+                        data: [50, 20, 30],
+                        backgroundColor: ['#2C3E50', '#C0A080', '#5D6D7E'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'right' } }
+                }
+            });
+        }
+
+        function switchStudy(index) {
+            const study = caseStudies[index];
+            document.getElementById('study-title').innerText = study.title;
+            document.getElementById('study-desc').innerText = study.desc;
+            document.getElementById('stat-1-val').innerText = study.stat1;
+            document.getElementById('stat-1-label').innerText = study.stat1Label;
+            document.getElementById('stat-2-val').innerText = study.stat2;
+            document.getElementById('stat-2-label').innerText = study.stat2Label;
+
+            const pointsList = document.getElementById('study-points');
+            pointsList.innerHTML = study.points.map(p => `
+                <li class="flex items-start gap-3">
+                    <span class="text-[#C0A080] mt-1">✓</span>
+                    <span class="text-sm text-[#2C3E50]">${p}</span>
+                </li>
+            `).join('');
+
+            studyChart.data.labels = study.labels;
+            studyChart.data.datasets[0].data = study.before;
+            studyChart.data.datasets[1].data = study.after;
+            studyChart.update();
+
+            document.querySelectorAll('.case-study-tab').forEach((tab, i) => {
+                if (i === index) tab.classList.add('active');
+                else tab.classList.remove('active');
+            });
+        }
+
+        window.onload = () => {
+            initCharts();
+            switchStudy(0);
+        };
+    </script>
+</body>
+</html>
